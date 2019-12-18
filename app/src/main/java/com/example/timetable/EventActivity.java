@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -34,6 +35,7 @@ public class EventActivity extends AppCompatActivity {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
+        contentValues.put(SQLiteEvent.EVENT_CONTACT_ID, MainActivity.LOGIN_ID);
         contentValues.put(SQLiteEvent.EVENT_NAME, name);
         contentValues.put(SQLiteEvent.EVENT_TIME, time);
         contentValues.put(SQLiteEvent.EVENT_DAY, day);

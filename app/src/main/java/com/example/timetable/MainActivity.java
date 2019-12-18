@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     int d = 0;
     int n = 0;
     SQLiteSignIn dbHelper;
+    public static Integer LOGIN_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
         if(cursor.moveToFirst()){
             int loginIndex = cursor.getColumnIndex(SQLiteSignIn.KEY_LOGIN);
             int passwordIndex = cursor.getColumnIndex(SQLiteSignIn.KEY_PASSWORD);
+            int idIndex = cursor.getColumnIndex(SQLiteSignIn.KEY_ID);
             do{
                 if(cursor.getString(loginIndex).equals(login)&& cursor.getString(passwordIndex).equals(password)){
+                    LOGIN_ID = cursor.getInt(idIndex);
                     Intent i = new Intent(MainActivity.this, TableActivity.class);
                     startActivity(i);
                     break;

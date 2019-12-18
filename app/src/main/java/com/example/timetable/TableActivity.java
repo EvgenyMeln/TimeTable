@@ -104,7 +104,7 @@ public class TableActivity extends AppCompatActivity {
 
         SQLiteDatabase db = dbHelper .getWritableDatabase();
 
-        Cursor cursor = db.query(SQLiteEvent.TABLE_CONTACTS_EVENT,null,SQLiteEvent.EVENT_DAY + " = ?", new String[]{day.getValue()}, null,null,null,null);
+        Cursor cursor = db.query(SQLiteEvent.TABLE_CONTACTS_EVENT,null,SQLiteEvent.EVENT_DAY + " = ? AND " + SQLiteEvent.EVENT_CONTACT_ID + " = ?", new String[]{day.getValue(), MainActivity.LOGIN_ID.toString()}, null,null,null,null);
 
         ArrayList<String> names = new ArrayList<>();
 
