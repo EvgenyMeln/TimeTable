@@ -1,6 +1,8 @@
 package com.example.timetable;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 public class TableActivity extends AppCompatActivity {
 
     SQLiteEvent dbHelper;
+    RecyclerView rv;
 
     private enum WEEKDAYS {
         WEEKDAY_MONDAY("0"),
@@ -43,6 +46,11 @@ public class TableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         TextView day = findViewById(R.id.textView3);
         day.setText("Выберете день недели!");
+
+        rv = findViewById(R.id.rv_event);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
     }
 
     public void OnClickButton1(View v) {
@@ -73,14 +81,12 @@ public class TableActivity extends AppCompatActivity {
         TextView day = findViewById(R.id.textView3);
         day.setText("Пятница");
         selectWeekday(WEEKDAYS.WEEKDAY_FRIDAY);
-        ;
     }
 
     public void OnClickButton6(View v) {
         TextView day = findViewById(R.id.textView3);
         day.setText("Суббота");
         selectWeekday(WEEKDAYS.WEEKDAY_SATURDAY);
-        ;
     }
 
     public void OnClickButton7(View v) {
@@ -106,19 +112,17 @@ public class TableActivity extends AppCompatActivity {
 
         Cursor cursor = db.query(SQLiteEvent.TABLE_CONTACTS_EVENT,null,SQLiteEvent.EVENT_DAY + " = ? AND " + SQLiteEvent.EVENT_CONTACT_ID + " = ?", new String[]{day.getValue(), MainActivity.LOGIN_ID.toString()}, null,null,null,null);
 
-        ArrayList<String> names = new ArrayList<>();
+        ArrayList<EventItem> items = new ArrayList<>();
 
         while (cursor.moveToNext()) {
             int nameIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_NAME);
             int timeIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_TIME);
             int commentIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_COMMENT);
 
-            names.add(cursor.getString(nameIndex));
+            items.add(new EventItem(cursor.getString(nameIndex), cursor.getString(timeIndex), cursor.getString(commentIndex)));
         }
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
-
-        ListView list_event = findViewById(R.id.event_list);
-        list_event.setAdapter(adapter);
+        EventAdapter adapter = new EventAdapter(items);
+        rv.setAdapter(adapter);
     }
 }
