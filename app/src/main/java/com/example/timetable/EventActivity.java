@@ -1,14 +1,14 @@
 package com.example.timetable;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.timetable.db.SQLiteEvent;
+
 ;
 
 public class EventActivity extends AppCompatActivity {

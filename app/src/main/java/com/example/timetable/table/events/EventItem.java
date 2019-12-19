@@ -1,4 +1,4 @@
-package com.example.timetable;
+package com.example.timetable.table.events;
 
 
 public class EventItem {

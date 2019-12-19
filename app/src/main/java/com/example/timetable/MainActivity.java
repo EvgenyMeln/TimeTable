@@ -1,7 +1,5 @@
 package com.example.timetable;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.timetable.db.SQLiteSignIn;
+import com.example.timetable.table.TableActivity;
 
 public class MainActivity extends AppCompatActivity {
 
