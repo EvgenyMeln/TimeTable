@@ -1,4 +1,4 @@
-package com.example.timetable;
+package com.example.timetable.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -21,68 +22,14 @@
         android:text="Выберете день:"
         android:textSize="18sp" />
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_weekdays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="OnClickButton1"
-            android:text="ПН" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="OnClickButton2"
-            android:text="ВТ" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="OnClickButton3"
-            android:text="СР" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="OnClickButton4"
-            android:text="ЧТ" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="OnClickButton5"
-            android:text="ПТ" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="OnClickButton6"
-            android:text="СБ" />
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="OnClickButton7"
-            android:text="ВС" />
-
-    </LinearLayout>
+        android:orientation="horizontal"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/weekday_item"
+        tools:orientation="horizontal" />
 
     <TextView
         android:id="@+id/textView3"
@@ -92,7 +39,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_event"
         android:layout_width="match_parent"
-        android:layout_height="483dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/cardview_event" />
 
     <Button
         android:id="@+id/button_event"
