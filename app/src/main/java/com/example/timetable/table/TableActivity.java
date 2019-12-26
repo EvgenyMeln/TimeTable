@@ -32,8 +32,9 @@ public class TableActivity extends AppCompatActivity {
     private EventAdapter eventAdapter;
     private WeekdayAdapter weekdayAdapter;
     private SQLiteEvent dbHelper;
+    private final int UPDATE_REQUEST = 1;
 
-    private Weekdays currentday;
+    private Weekdays currentDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +59,15 @@ public class TableActivity extends AppCompatActivity {
     public void initEventRV() {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         eventAdapter = new EventAdapter();
-        eventAdapter.setlistener(new EventClickListener() {
+        eventAdapter.setListener(new EventClickListener() {
             @Override
             public void onClickedItem(EventItem eventitem) {
                 Intent intent = new Intent(TableActivity.this, EventActivity.class);
                 intent.putExtra(EventActivity.EXTRA_EDIT_OR_ADD, true);
                 intent.putExtra(EventActivity.EXTRA_EVENT_ITEM, eventitem);
-                intent.putExtra(EventActivity.EXTRA_EVENT_DAY, currentday.getInt());
-                startActivity(intent);
+                intent.putExtra(EventActivity.EXTRA_EVENT_DAY, currentDay.getInt());
+                startActivityForResult(intent,UPDATE_REQUEST);
+
             }
         });
         rvEvent.setLayoutManager(llm);
@@ -91,8 +93,9 @@ public class TableActivity extends AppCompatActivity {
         weekdayAdapter.notifyDataSetChanged();
     }
 
-    public void selectWeekday(Weekdays day) {
 
+    public void selectWeekday(Weekdays day) {
+        currentDay = day;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         Cursor cursor = db.query(SQLiteEvent.TABLE_CONTACTS_EVENT,
@@ -121,8 +124,6 @@ public class TableActivity extends AppCompatActivity {
                             cursor.getString(homeworkIndex) ));
         }
 
-        currentday = day;
-
         eventAdapter.setItems(items);
 
         cursor.close();
@@ -135,5 +136,12 @@ public class TableActivity extends AppCompatActivity {
 
     public void onButtonClick(View v) {
         finish();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == UPDATE_REQUEST && resultCode == RESULT_OK) {
+            selectWeekday(currentDay);
+            eventAdapter.notifyDataSetChanged();
+        }
     }
 }

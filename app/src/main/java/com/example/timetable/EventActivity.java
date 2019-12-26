@@ -72,8 +72,8 @@ public class EventActivity extends AppCompatActivity {
             db.insert(SQLiteEvent.TABLE_CONTACTS_EVENT, null , contentValues);
 
         db.close();
-
-        finish();
+        setResult(RESULT_OK);
+        finish();1
 
     }
 

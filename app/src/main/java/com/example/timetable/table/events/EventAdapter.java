@@ -42,7 +42,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void setlistener(EventClickListener listener){
+    public void setListener(EventClickListener listener){
         this.listener = listener;
     }
 
