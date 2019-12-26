@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.example.timetable.MainActivity;
 import com.example.timetable.R;
 import com.example.timetable.db.SQLiteEvent;
 import com.example.timetable.table.events.EventAdapter;
+import com.example.timetable.table.events.EventClickListener;
 import com.example.timetable.table.events.EventItem;
 import com.example.timetable.table.weekdays.WeekdayAdapter;
 import com.example.timetable.table.weekdays.WeekdayClickListener;
@@ -30,6 +32,8 @@ public class TableActivity extends AppCompatActivity {
     private EventAdapter eventAdapter;
     private WeekdayAdapter weekdayAdapter;
     private SQLiteEvent dbHelper;
+
+    private Weekdays currentday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,16 @@ public class TableActivity extends AppCompatActivity {
     public void initEventRV() {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         eventAdapter = new EventAdapter();
+        eventAdapter.setlistener(new EventClickListener() {
+            @Override
+            public void onClickedItem(EventItem eventitem) {
+                Intent intent = new Intent(TableActivity.this, EventActivity.class);
+                intent.putExtra(EventActivity.EXTRA_EDIT_OR_ADD, true);
+                intent.putExtra(EventActivity.EXTRA_EVENT_ITEM, eventitem);
+                intent.putExtra(EventActivity.EXTRA_EVENT_DAY, currentday.getInt());
+                startActivity(intent);
+            }
+        });
         rvEvent.setLayoutManager(llm);
         rvEvent.setAdapter(eventAdapter);
     }
@@ -96,9 +110,18 @@ public class TableActivity extends AppCompatActivity {
             int nameIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_NAME);
             int timeIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_TIME);
             int commentIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_COMMENT);
-
-            items.add(new EventItem(cursor.getString(nameIndex), cursor.getString(timeIndex), cursor.getString(commentIndex)));
+            int idIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_ID);
+            int homeworkIndex = cursor.getColumnIndex(SQLiteEvent.EVENT_HOMEWORK);
+            items.add(
+                    new EventItem(
+                            cursor.getInt(idIndex),
+                            cursor.getString(nameIndex),
+                            cursor.getString(timeIndex),
+                            cursor.getString(commentIndex),
+                            cursor.getString(homeworkIndex) ));
         }
+
+        currentday = day;
 
         eventAdapter.setItems(items);
 

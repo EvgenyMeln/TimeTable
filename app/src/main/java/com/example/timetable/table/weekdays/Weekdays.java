@@ -30,4 +30,6 @@ public enum Weekdays {
     public String getFullName() {
         return fullName;
     }
+
+    public int getInt(){return Integer.parseInt(value);}
 }

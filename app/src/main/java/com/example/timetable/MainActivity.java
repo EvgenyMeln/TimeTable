@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onLoginButtonClick(View v) {
 
-        TextView check =  findViewById(R.id.textView2);
-
         EditText log = findViewById(R.id.login);
         EditText pas = findViewById(R.id.password);
 
@@ -57,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
             }while(cursor.moveToNext());
 
         }
+
+        cursor.close();
+
         if(d>n){
-            log.setText("");
-            pas.setText("");
-            check.setText("Неверный логин или пароль");
+            Toast toast = Toast.makeText(MainActivity.this, "Неверно введены данные !", Toast.LENGTH_LONG);
+            toast.show();
             d=0;
         }
     }
@@ -85,13 +85,15 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.query(SQLiteSignIn.TABLE_CONTACTS, null, null, null, null, null, null);
 
         if(!pas_1.equals(pas_2) || pas_1.length() < 6){
-            check.setText("Пароль не совпадает или слишком короткий(не менее 6 символов)");
+            Toast toast = Toast.makeText(MainActivity.this, "Пароли не совпадают или слишком короткий(не менее 6 символов)", Toast.LENGTH_LONG);
+            toast.show();
         }else {
             if(cursor.moveToFirst()){
                 int loginIndex = cursor.getColumnIndex(SQLiteSignIn.KEY_LOGIN);
                 do {
                     if(cursor.getString(loginIndex).equals(log)){
-                        check.setText("Такой логин уже существует");
+                        Toast toast = Toast.makeText(MainActivity.this, "Такой логин уже существует !", Toast.LENGTH_LONG);
+                        toast.show();
                        return;
                     }
                 }while(cursor.moveToNext());
@@ -103,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
             setContentView(R.layout.activity_login);
         }
+
+        cursor.close();
 
     }
 

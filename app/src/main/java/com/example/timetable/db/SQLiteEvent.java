@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLiteEvent extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "contact_db";
     public static final String TABLE_CONTACTS_EVENT = "contacts_event";
 
@@ -16,6 +16,7 @@ public class SQLiteEvent extends SQLiteOpenHelper{
     public static final String EVENT_TIME = "time";
     public static final String EVENT_DAY = "day";
     public static final String EVENT_COMMENT = "comment";
+    public static final String EVENT_HOMEWORK = "homework";
 
     public SQLiteEvent(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,7 +26,7 @@ public class SQLiteEvent extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table " + TABLE_CONTACTS_EVENT + "(" + EVENT_ID
-                + " integer primary key autoincrement," + EVENT_CONTACT_ID + " integer," + EVENT_NAME + " text," + EVENT_TIME + " text," + EVENT_DAY + " text,"+ EVENT_COMMENT + " text"+ ")");
+                + " integer primary key autoincrement," + EVENT_CONTACT_ID + " integer," + EVENT_NAME + " text," + EVENT_TIME+ " text," + EVENT_DAY + " text," + EVENT_COMMENT + " text,"+ EVENT_HOMEWORK + " text"+ ")");
     }
 
     @Override
